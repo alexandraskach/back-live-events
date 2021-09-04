@@ -43,7 +43,7 @@ use App\Controller\ResetPasswordAction;
  *       }
  *     },
  *     "put-reset-password"={
- *      "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
+ *     "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
  *      "method"="PUT",
  *      "path"="/users/{id}/reset-password",
  *      "controller"=ResetPasswordAction::class,
