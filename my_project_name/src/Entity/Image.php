@@ -26,6 +26,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "controller"=UploadImageAction::class,
  *             "defaults"={"_api_receive"=false}
  *         }
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "delete"={
+ *             "access_control"="is_granted('ROLE_WRITER')"
+ *         }
  *     }
  * )
  */
