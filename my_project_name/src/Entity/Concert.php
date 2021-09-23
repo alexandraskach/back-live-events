@@ -9,13 +9,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ConcertRepository::class)
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "artiste": "exact",
+ *         "style": "exact",
+ *         "date": "exact",
+ *         "scene": "exact"
+ *     }
+ * )
  * @ApiResource(
  *     attributes={"order"={"date": "DESC"}},
  *     itemOperations={
- *         "get",
+ *         "get"={
+ *           "normalization_context"={
+ *             "groups"={"get_concert_with_image"}
+ *            }
+ *         },
  *         "put"={
  *             "access_control"="is_granted('ROLE_EDITOR') or (is_granted('ROLE_WRITER') and object.getAuthor() == user)"
  *         }
@@ -37,6 +52,7 @@ class Concert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get_concert_with_image"})
      */
     private $id;
 
@@ -44,7 +60,7 @@ class Concert
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(max=20)
-     * @Groups({"post"})
+     * @Groups({"post","get_concert_with_image"})
      */
     private $artiste;
 
@@ -52,7 +68,7 @@ class Concert
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(max=20)
-     * @Groups({"post"})
+     * @Groups({"post", "get_concert_with_image"})
      */
     private $style;
 
@@ -60,12 +76,13 @@ class Concert
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\Length(max=2)
-     * @Groups({"post"})
+     * @Groups({"post", "get_concert_with_image"})
      */
     private $scene;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"post", "get_concert_with_image"})
      */
     private $date;
 
@@ -73,10 +90,16 @@ class Concert
      * @ORM\ManyToMany(targetEntity="Image")
      * @ORM\JoinTable()
      * @ApiSubresource()
-     * @Groups({"post"})
+     * @Groups({"post","get_concert_with_image"})
     */
     private $images;
 
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->date = new \DateTime();
+
+    }
 
     public function getId(): ?int
     {
@@ -119,17 +142,15 @@ class Concert
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
+    public function getDate(): ?\DateTimeInterface {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
-    {
+    public function setDate(\DateTimeInterface $date): self {
         $this->date = $date;
-
         return $this;
     }
+    
     public function getImages(): Collection
     {
         return $this->images;
@@ -144,5 +165,6 @@ class Concert
     {
         $this->images->removeElement($image);
     }
+
   
 }

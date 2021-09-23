@@ -4,9 +4,7 @@ namespace App\Tests\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Actualite;
-use App\Entity\BlogPost;
 use App\Entity\Comment;
-use App\Entity\User;
 use App\Entity\Users;
 use App\EventSubscriber\AuthoredEntitySubscriber;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -16,18 +14,13 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use DG\BypassFinals;
 
 
-class AuthoredEntitySubscriberTest extends TestCase
+
+class AuthoredEntityTest extends TestCase
 
 {
 
-      /**
-     * @var DG\BypassFInals
-     */
-
-    private $byPassFinals;
 
     public function testConfiguration()
     {

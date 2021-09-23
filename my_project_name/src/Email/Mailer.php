@@ -39,7 +39,7 @@ class Mailer
         );
 
         $message = (new Swift_Message('Please confirm your account!'))
-            ->setFrom('alexandracuren@gmail.com')
+            ->setFrom('noreplyliveevents@gmail.com')
             ->setTo($user->getMail())
             ->setBody($body, 'text/html');
 

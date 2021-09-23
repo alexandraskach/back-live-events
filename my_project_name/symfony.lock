@@ -76,6 +76,9 @@
     "coduo/php-to-string": {
         "version": "3.2.0"
     },
+    "composer/ca-bundle": {
+        "version": "1.2.10"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -281,8 +284,23 @@
             "./config/packages/nelmio_cors.yaml"
         ]
     },
+    "nelmio/security-bundle": {
+        "version": "2.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.4",
+            "ref": "65726efb67ff51d89de38195bc0d230fa811f64d"
+        },
+        "files": [
+            "./config/packages/nelmio_security.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -733,6 +751,9 @@
     },
     "twig/twig": {
         "version": "v3.2.1"
+    },
+    "ua-parser/uap-php": {
+        "version": "v3.9.14"
     },
     "vich/uploader-bundle": {
         "version": "1.7",

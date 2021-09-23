@@ -52,7 +52,7 @@ class Image
 
     /**
      * @ORM\Column(nullable=true)
-     * @Groups({"get_actualite_with_author"})
+     * @Groups({"get_actualite_with_author", "get_concert_with_image"})
      */
     private $url;
 
